@@ -51,3 +51,5 @@ public class Car {
         this.series = series;
     }
 }
+
+//http://java-online.ru/hibernate-entities.xhtml
