@@ -25,8 +25,16 @@ import java.util.Properties;
 @ComponentScan(value = "hiber")
 public class AppConfig {
 
-    @Autowired
+    //    @Autowired
     private Environment env;
+
+    @Autowired
+    public AppConfig(Environment env) {
+        this.env = env;
+    }
+
+    public AppConfig() {
+    }
 
     @Bean
     public DataSource getDataSource() {
@@ -44,11 +52,17 @@ public class AppConfig {
         factoryBean.setDataSource(getDataSource());
 
         Properties props = new Properties();
-        props.put("hibernate.show_sql", env.getProperty("hibernate.show_sql"));
+//        props.put("hibernate.show_sql", env.getProperty("hibernate.show_sql"));
         props.put("hibernate.hbm2ddl.auto", env.getProperty("hibernate.hbm2ddl.auto"));
+        props.put("hibernate.characterEncoding", env.getProperty("hibernate.characterEncoding"));
+//        props.put("hibernate.format_sql", env.getProperty("hibernate.format_sql"));
 
         factoryBean.setHibernateProperties(props);
+
+        // положить все классы Entity - сюда:
+        // MAPPING классов для HIBERNATE - какие классы положить в таблицы
         factoryBean.setAnnotatedClasses(User.class, Car.class);
+
         return factoryBean;
     }
 

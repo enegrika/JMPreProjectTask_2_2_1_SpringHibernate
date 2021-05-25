@@ -19,26 +19,29 @@ public class User {
    @Column(name = "email")
    private String email;
 
-   ///// SOLUTION
-   @OneToOne(optional = false, cascade = CascadeType.ALL)
-   @JoinColumn(name = "car_id")
-   private Car car;
+
+   /// SOLUTION
+   @OneToOne(cascade = CascadeType.ALL)
+   @JoinColumn(name = "fk_car_id")
+   private Car carObj;
+
+   public Car getCarObj() {
+      return carObj;
+   }
+
+   public void setCarObj(Car car) {
+      this.carObj = car;
+   }
 
    public User() {}
    
-   public User(String firstName, String lastName, String email) {
+   public User(String firstName, String lastName, String email, Car carObj) {
       this.firstName = firstName;
       this.lastName = lastName;
       this.email = email;
+      this.carObj = carObj;
    }
 
-   public Long getId() {
-      return id;
-   }
-
-   public void setId(Long id) {
-      this.id = id;
-   }
 
    public String getFirstName() {
       return firstName;
@@ -63,4 +66,16 @@ public class User {
    public void setEmail(String email) {
       this.email = email;
    }
+
+   @Override
+   public String toString() {
+      return "User_" +
+              "id = " + id +
+              ", firstName='" + firstName + '\'' +
+              ", lastName='" + lastName + '\'' +
+              ", email='" + email + '\'' +
+              ", CarModel=" + carObj.getModel() + " series: " + carObj.getSeries() +
+              ' ';
+   }
+
 }
